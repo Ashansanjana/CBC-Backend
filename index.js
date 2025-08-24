@@ -30,7 +30,6 @@ app.use((req,res,next)=>{
 {next()}}
 );
 
-
 app.use('/user', userRouter);
 
 
