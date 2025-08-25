@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import userRouter from './routes/userRouter.js';
 import jwt from 'jsonwebtoken';
+import productRouter from './routes/productRouter.js';
 
 const  app = express();
 
@@ -31,7 +32,7 @@ app.use((req,res,next)=>{
 );
 
 app.use('/user', userRouter);
-
+app.use('/product', productRouter);
 
 
 app.listen(
