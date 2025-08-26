@@ -58,3 +58,49 @@ export async function deleteProduct(req, res) {
     }
 }
 
+export async function updateProduct(req, res) {
+    if(!isAdmin(req)){
+        res.status(403).json({
+            message:"You are not authorized to update a product"      
+    })
+         return;
+    }
+
+    const productID = req.params.productID;
+    const updatedData = req.body;
+
+    try {
+        await Product.updateOne(
+            { productID: productID},
+              updatedData
+           
+        );
+        res.json({ message: 'Product updated successfully' });
+
+    } catch (err) {
+        res.status(500).json({ 
+            message: 'Error updating product', 
+            error: err });
+    }
+}
+
+export async function getProductByid(req, res) {
+    const productID = req.params.productID;
+    try {
+        const product = await Product.findOne(
+            {productID: productID }
+        )
+
+    if(product==null){
+        res.status(404).json({message:"Product not found"});
+    }
+
+    if(product.isAvailable){
+        res.json(product);
+
+    }}catch (err) {
+        res.status(500).json({ 
+            message: 'Error fetching product', 
+            error: err});
+    }
+}
