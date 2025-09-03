@@ -6,8 +6,10 @@ import jwt from 'jsonwebtoken';
 import productRouter from './routes/productRouter.js';
 import orderRouter from './routes/orderRouter.js';
 import reviewRouter from './routes/reviewRouter.js';
+import cors from 'cors';
 
 const  app = express();
+app.use(cors());
 
 mongoose.connect('mongodb+srv://admin:1234@cluster0.3x7vxfc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0').then(() => {
     console.log('MongoDB connected successfully')}).catch((err) => {
