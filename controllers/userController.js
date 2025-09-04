@@ -7,7 +7,7 @@ dotenv.config();
 
 
 export function createUser(req, res) {
-    if(req.body.role="admin" ){
+    if(req.body.role==="admin" ){
         if(req.user!=null){
             if(req.user.role!="admin"){
                 return res.status(403).json({
@@ -47,6 +47,7 @@ export function createUser(req, res) {
     });
 }
 
+
 export function loginUser(req, res) {
     const email = req.body.email;
     const password = req.body.password;
@@ -70,7 +71,8 @@ export function loginUser(req, res) {
 
                     res.json({
                         message : 'Login successful',
-                        token: token
+                        token: token,
+                        role: user.role
                     })}else {
                     res.status(401).json({
                         message: 'Password is invalid'
