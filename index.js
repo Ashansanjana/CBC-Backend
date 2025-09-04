@@ -7,11 +7,14 @@ import productRouter from './routes/productRouter.js';
 import orderRouter from './routes/orderRouter.js';
 import reviewRouter from './routes/reviewRouter.js';
 import cors from 'cors';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const  app = express();
 app.use(cors());
 
-mongoose.connect('mongodb+srv://admin:1234@cluster0.3x7vxfc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0').then(() => {
+mongoose.connect(process.env.MONGODB_URL).then(() => {
     console.log('MongoDB connected successfully')}).catch((err) => {
     console.error('MongoDB connection error:', err)});
 
@@ -21,7 +24,7 @@ app.use((req,res,next)=>{
     const tokenString = req.header('Authorization');
     if(tokenString!=null){
         const token = tokenString.replace('Bearer ', '');
-        jwt.verify(token, 'ashan@1117', (err, decoded) => {
+        jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
         if(decoded!=null){
             req.user = decoded;
             next();
